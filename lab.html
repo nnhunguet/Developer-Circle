@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab</title>
+</head>
+<body>
+  <h1>Currency Converter</h1>
+  <input id="valueInput" type="number"/>
+  <button id="button">Convert Currency</button>
+  <span id="result"></span>
+  <input type="radio" name="cur" value="USD" checked> USD
+  <input type="radio" name="cur" value="EUR"> EUR
+  <input type="radio" name="cur" value="JPY"> JPY
+  
+  <script>
+    const optionCurrency = document.getElementsByName("cur"); 
+    const button = document.getElementById("button");
+    const result = document.getElementById("result");
+
+    button.addEventListener('click', async () => {
+      let currentCurrency ; 
+      const valueInput = parseInt(document.getElementById("valueInput").value);
+      for(var cur of optionCurrency) {
+        if(cur.checked === true) {
+          currentCurrency = cur.value;
+        }
+      }
+      const exchangeRateJson = await fetch(`https://free.currconv.com/api/v7/convert?q=${currentCurrency}_VND&compact=ultra&apiKey=6c373044e61960e222b5`);
+      const exchangeRate = await exchangeRateJson.json().then( data => {
+        let key =  Object.keys(data);
+        return data[key[0]];
+      });
+      let totalCurrencyConvert = valueInput * exchangeRate;
+      result.innerHTML = `${totalCurrencyConvert.toLocaleString('it-IT', {
+        style: 'currency',
+        currency: 'VND'
+      })}`;
+    });
+  </script>
+</body>
+</html>

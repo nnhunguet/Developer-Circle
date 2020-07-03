@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Example</title>
+</head>
+<body>
+  <div id="message">
+  <div>
+    <span id="result"></span>
+  </div>
+    <input type="number" id="inputNumber"/>
+    <button id="guessButton">Guess</button>
+    <p id="countResult"></p>
+    <h2 id="passGuessStr"></h2>
+  </div>
+  <script>
+    const correctNumber = 10;
+
+    let button = document.getElementById("guessButton");
+    let passGuessStr = ""; 
+    let count = 10;
+    document.getElementById("countResult").innerHTML = `The count: ${count}`;
+    button.addEventListener('click', function() { //show result
+      if(count === 0) {
+        return;
+      }
+      count--;
+      let inputValue = parseInt(document.getElementById("inputNumber").value);
+      if( inputValue < correctNumber) {
+        document.getElementById("result").innerHTML = `Sorry your guess is too low. You have ${count} guess left`;
+        document.getElementById("result").style.backgroundColor = "red";
+      }
+      if( inputValue > correctNumber) {
+        document.getElementById("result").innerHTML = `Sorry your guess is too low. You have ${count} guess left`;
+        document.getElementById("result").style.backgroundColor = "red";
+      }
+      if( inputValue === correctNumber) {
+        document.getElementById("result").innerHTML = "Congratulations!! You guessed correctly.";
+        document.getElementById("result").style.backgroundColor = "green";
+      }
+      passGuessStr = passGuessStr + `${inputValue} <br>` ;
+      document.getElementById("passGuessStr").innerHTML = passGuessStr;
+      document.getElementById("countResult").innerHTML = `The count: ${count}`;
+    }); 
+
+  </script>
+</body>
+</html>
